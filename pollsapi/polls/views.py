@@ -23,7 +23,7 @@ class CreateVote(APIView):
     
     def post(self, request, pk, choice_pk):
         voted_by = request.data.get("voted_by")
-        data = {'choice' choice_pk, 'poll': pk, 'voted_by': voted_by}
+        data = {'choice': choice_pk, 'poll': pk, 'voted_by': voted_by}
         serializer = VoteSerializer(data=data)
         if serializer.is_valid():
             vote = serializer.save()

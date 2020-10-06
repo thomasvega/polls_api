@@ -32,4 +32,10 @@ class CreateVote(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UserCreate(generics.CreateAPIView):
+    """
+    Giving exemption to UserCreate view for authentication by overriding the global setting
+    authentication_classes = () and permission_classes = () will do the job
+    """
+    authentication_classes = ()
+    permission_classes = ()
     serializer_class = UserSerializer

@@ -22,7 +22,13 @@ class PollSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
 class UserSerializer(serializers.ModelSerializer):
-
+    """
+    Overriden the modelSerializer method's create to save the User
+    instances.
+    We ensure that we set the password correctly using user.set_password
+    rather than setting the raw password as the hash. We also don't want to get back 
+    the password in response which we ensure using the extra_kwargs
+    """
     class Meta:
         model = User
         fields = ('username', 'email', 'password')

@@ -25,10 +25,11 @@ class PollViewSet(viewsets.ModelViewSet):
         return super().destroy(request, *args, **kwargs)
 
 class ChoiceList(generics.ListCreateAPIView):
+    serializer_class = ChoiceSerializer
+
     def get_queryset(self):
         queryset = Choice.objects.filter(poll_id=self.kwargs['pk'])
         return queryset
-    serializer_class = ChoiceSerializer
 
     def post(self, request, *args, **kwargs):
         """
@@ -42,7 +43,6 @@ class ChoiceList(generics.ListCreateAPIView):
 
 
 class CreateVote(APIView):
-    serializer_class = VoteSerializer
     
     def post(self, request, pk, choice_pk):
         voted_by = request.data.get("voted_by")

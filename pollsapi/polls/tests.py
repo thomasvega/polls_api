@@ -3,8 +3,24 @@ from rest_framework.test import APIRequestFactory
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
+from django.contrib.auth.models import User
+from django.urls import reverse
+from rest_framework import status
+
 
 from polls import views
+
+class AccountTests(APITestCase):
+    def test_create_account(self):
+        """
+        Ensure we can create a new account object
+        """
+        url = reverse('user_create')
+        data = {'username': 'test', 'email': 'test@test.com', 'password': 'test'}
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(User.objects.count(), 1)
+        self.assertEqual(User.objects.get().email,'test@test.com')
 
 class TestPoll(APITestCase):
     def setUp(self):
